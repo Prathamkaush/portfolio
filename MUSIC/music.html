@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUSIC PLAYER</title>
+</head>
+<body>
+    <div class="containor">
+        <div class="music">
+            <nav>
+                <div class="circle">
+                    <i class="ri-arrow-left-s-line"></i>
+                </div>
+                <div class="circle">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </nav>
+            <img src="Screenshot (1).png" class="song">
+            <h1>KNEE SOCKS</h1>
+            <p>ARCTIC MONKEYS</p>
+            <audio id="songs" src="Arctic_Monkeys_-_Knee_Socks_(ColdMP3.com).mp3"></audio>
+            <input type="range" value="0" id="progress">
+            <div class="controls">
+                <div><i class="ri-arrow-left-double-fill"></i></div>
+                <div onclick="playPause()"><i class="ri-play-fill" id="ctrlIcon"></i></div>
+                <div><i class="ri-arrow-right-double-fill"></i></div>
+            </div>
+        </div>
+    </div>
+    <script>
+let progress = document.getElementById("progress");
+let songs = document.getElementById("songs");
+let ctrlIcon = document.getElementById("ctrlIcon");
+let songImage = document.querySelector(".song");
+
+songs.onloadmetadata = function(){
+    progress.max = songs.duration;
+    progress.value = songs.currentTime;
+}
+function playPause(){
+    if(ctrlIcon.classList.contains("ri-pause-line")){
+        songs.pause();
+        ctrlIcon.classList.remove("ri-pause-line");
+        ctrlIcon.classList.add("ri-play-fill");
+        songImage.classList.remove("rotate");
+    }
+    else{
+        songs.play();
+        ctrlIcon.classList.add("ri-pause-line");
+        ctrlIcon.classList.remove("ri-play-fill");
+        songImage.classList.add("rotate");
+    }
+}
+if(songs.play()){
+    setInterval(()=>{
+        progress.value = songs.currentTime;
+    },500);
+}
+progress.onchange = function(){
+    songs.play();
+    songs.currentTime = progress.value;
+    ctrlIcon.classList.add("ri-pause-line");
+    ctrlIcon.classList.remove("ri-play-fill");
+}
+    </script>
+</body>
+</html>
